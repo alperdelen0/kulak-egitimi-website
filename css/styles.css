@@ -1,0 +1,17 @@
+.noteHolder::before {
+    content: counter(melody-counter) ") ";
+    counter-increment: melody-counter; 
+}
+#content-container {
+    counter-reset: melody-counter;
+}
+.sound-btn {
+    background-color: #3D3B40;
+}
+.true {
+    background-color: #198754;
+}
+
+.false {
+    background-color: #dc3545;
+}
