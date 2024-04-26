@@ -24,13 +24,13 @@
                     <a class="nav-link" href="tekSes.html"> Tek Ses </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> Çift Ses </a>
+                    <a class="nav-link" href="ciftSes.html"> Çift Ses </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> Akorlar </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"> Melodiler </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Akorlar </a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#"><i class="bi bi-moon-fill"></i> Dark Mode </a>
@@ -40,36 +40,73 @@
         </div>
     </nav>
     <!-- Nav bitiş -->
-    <div class="container text-center">
-      <br><br>
-      <ul class="list-group text-center container-fluid fs-4">
-        <li class="list-group-item border-dark">DUYURU</li>
-        <li class="list-group-item bg-warning border-dark">Site yapım aşamasındadır.</li>
-        <li class="list-group-item border-dark"></li>
 
-        <li class="list-group-item border-dark">Bilgilendirme</li>
-        <li class="list-group-item bg-info border-dark">Site mobil kullanıma uygundur.</li>
-        <li class="list-group-item bg-info border-dark">Şimdilik sadece "Tek Ses" sayfası çalışır durumdadır.</li>
-        <li class="list-group-item border-dark"></li>
-  
-  
-        <li class="list-group-item border-dark">Tamamlanan Güncellemeler</li>
-        <li class="list-group-item bg-success text-white border-dark">Tek ses sayfası tahmin bölgesi kodları güncellenecek. (09.04.24)</li>
-        <li class="list-group-item bg-success text-white border-dark">Akorlar sayfası çalışır hale getirelecek. (10.04.24)</li>
-        <li class="list-group-item bg-success text-white border-dark">Nota tahmin etmeyi değiştir. (18.04.24)</li>
-        <li class="list-group-item bg-success text-white border-dark">Sitenin mobil görünümü değişecek. (25.04.24)</li>
-        <li class="list-group-item bg-success text-white border-dark">Site görünüm güzelleştirmeleri yapılacak. (25.04.24)</li>
-
-        <li class="list-group-item border-dark"></li>
-        <li class="list-group-item border-dark">Yapılacaklar Güncellemeler</li>
-        <li class="list-group-item bg-secondary-subtle border-dark">Çift ses, melodiler ve akorlar sayfası görünümü ve kodları güncellenecek.</li>
-        <li class="list-group-item bg-secondary-subtle border-dark">Nota sesleri güncellenecek.</li>
-
-        <li class="list-group-item border-dark"></li>
-        <li class="list-group-item border-dark">İletişim Bilgileri</li>
-        <li class="list-group-item bg-primary border-dark text-white">E-Mail: alperd101@gmail.com</li>
-      </ul>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Duyurular
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>- Site yapım aşamasındadır.</strong><br>
+            - Bu yüzden, bazı hatalar ile karşılaşabilirsiniz.<br>
+            - Hataları bildirmek için <a href="#iletisim">Mail</a> üzerinden <a href="#iletisim">iletişime</a> geçebilirsiniz.<br>
+            - Site en kısa sürede tamamlanacaktır.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Bilgilendirme
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            - Site mobil kullanıma uygundur.<br>
+            - <a href="tekSes.html">Tek Ses</a> ve <a href="ciftSes.html">Çift Ses</a> sayfaları çalışır durumdadır.<br>
+            - Akorlar ve Melodiler sayfası en kısa sürede tamamlanacak ve çalışır hale gelecektir.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Tamamlanan Güncellemeler
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse bg-success" data-bs-parent="#accordionExample">
+          <div class="accordion-body text-white">
+            - Tek ses sayfası tahmin bölgesi kodları güncellenecek. (09.04.24)<br>
+            - Nota tahmin etmeyi değiştir. (18.04.24)<br>
+            - Sitenin mobil görünümü değişecek. (25.04.24)<br>
+            - Site görünüm güzelleştirmeleri yapılacak. (25.04.24)<br>
+            - Çift ses sayfası görünümü ve kodları güncellendi. (26.04.24)<br>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            Yapılacak Güncellemeler
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            - Çift ses, melodiler ve akorlar sayfası görünümü ve kodları güncellenecek.<br>
+            - Duraklat ve Devam Et butonları eklenecek.<br>
+            - Nota sesleri güncellenecek.<br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="iletisim" class="text-center">
       <br>
+      <h3>İletişim Bilgileri</h3>
+      <p><b>Gmail:</b> delenalper1@gmail.com</p>
+      <p><b>Email:</b> alperdelen@hotmail.com</p>
     </div>
 
     <!-- <div class="container text-center">
