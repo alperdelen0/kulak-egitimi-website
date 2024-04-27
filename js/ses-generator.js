@@ -1,6 +1,7 @@
-let notalar = ["si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
+let notalar = ["fa#(kalın)/solb(kalın)", "sol(kalın)", "sol#(kalın)/lab(kalın)", "la(kalın)", "la#(kalın)/sib(kalın)", "si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)", "fa(ince)", "fa#(ince)/solb(ince)", "sol(ince)"];
 // Tek ses başlangıç
 function NormalTekSesGenerator(){
+    notalar = ["si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
     let difficulty = "NormalTekSesGenerator()";
     let noteLengths = 30;
 
@@ -108,6 +109,7 @@ function NormalTekSesGenerator(){
 }
 
 function EasyTekSesGenerator(){
+    notalar = ["si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
     let difficulty = "EasyTekSesGenerator()";
     let tekSesler = new Array(29);
     let noteLength = 30;
@@ -197,11 +199,12 @@ function QuickFix(tekSesler){
 // Çift ses
 var ciftSesAraligi;
 function CreateCiftSes(ciftSesLength){
+    notalar = ["si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
+
     if(ciftSesLength === null || ciftSesLength === undefined){
-        localStorage.setItem("ciftSesLengthValue", 10);
-        sesLength = 10;
+        localStorage.setItem("lengthValue", 10);
     }
-    let difficulty = "CreateCiftSes(localStorage.getItem('ciftSesLengthValue'))";
+    let difficulty = "CreateCiftSes(localStorage.getItem('lengthValue'))";
     let sesAraliklari = new Array(7);
     
     let sesAraligi = "minor2, major2, minor3, major3, tam4, artmis4, tam5".split(", ");
@@ -213,8 +216,8 @@ function CreateCiftSes(ciftSesLength){
     sesAraliklari[5] = "do fa#, reb sol, re sol#, mib la, mi la#, fa si, solb do(ince), sol do#(ince), lab re(ince), sib mi(ince)".split(", ");
     sesAraliklari[6] = "do sol, re la, mi si, fa do(ince), sol re(ince), la mi(ince), sib fa, si fa#".split(", ");
 
-    let notalar =
-        "fa#(kalın), sol(kalın), sol#(kalın), la(kalın), sib(kalın), si(kalın), do, do#, re, re#, mi, fa, fa#, sol, sol#, la, la#, si, do(ince), do#(ince), re(ince), re#(ince), mi(ince)".split(", ");
+    // let notalar =
+    //     "fa#(kalın), sol(kalın), sol#(kalın), la(kalın), sib(kalın), si(kalın), do, do#, re, re#, mi, fa, fa#, sol, sol#, la, la#, si, do(ince), do#(ince), re(ince), re#(ince), mi(ince)".split(", ");
 
     let ayniNotalar = new Array(2);
     ayniNotalar[0] = "do#, re#, fa#, sol#, la#, do#(ince), re#(ince)".split(", ");
@@ -292,7 +295,6 @@ function CreateCiftSes(ciftSesLength){
                 SelectNotaByAralik(randomAralik);
             }
             else{
-                console.log("keke")
                 SetSesAraligi();
             }
             }
@@ -407,7 +409,7 @@ function CreateCiftSes(ciftSesLength){
     }
 
     function Assignment(){
-        console.clear();
+        //console.clear();
 
         for (let i = 0; i < ciftSesLength; i++) {
             let returnHolder = Returner(i);
@@ -424,13 +426,103 @@ function CreateCiftSes(ciftSesLength){
         }
         List(1, difficulty, ciftSesLength, ciftSesler);
         TekSesButtonManager(1, ciftSesler);
-        //CreateHtmlUI(ciftSesLength, ciftSesler);
-        //playCiftSesNotesWithRetry(ciftSesler, ciftSesAraligi, true);
     }
 }
+
+// Akorlar
+function CreateAkor(akorLength){
+    if(akorLength === null || akorLength === undefined){
+        localStorage.setItem("lengthValue", 10);
+    }
+    let difficulty = "CreateAkor(localStorage.getItem('lengthValue'))";
+    let akorlar = new Array(8);
+    var selectedAkorlar;
+    
+    let akorIndexs;
+    let fazlalik;
+    
+    akorlar[0] = "do mi sol, do mib sol, do mi sol#, do mib solb, do mi la, do mib la, do mib lab, do# mi sol#, do# mi la, do fa la, do fa# la, do fa la#, do# fa# la, do# mi sol".split(", ");
+    akorlar[1] = "re fa la, re fa# la, re fa lab, re fa# la#, re fa si, re fa sib, re fa# si, re# fa# si, re sol si, re sol si, re sol sib, re sol# si, reb fa lab, reb fa sib, reb sol sib, reb fa la".split(", ");
+    akorlar[2] = "mi sol si, mi sol# si, mi sol sib, mib sol sib, mi sol sib, mi sol do(ince), mib sol do(ince), mib sol si, mi sol# do#(ince), mi la do(ince), mi la do#(ince), mib lab do(ince)".split(", ");
+    akorlar[3] = "fa la do(ince), fa lab do(ince), fa la do#(ince), fa# la do#(ince), fa# la do(ince), fa si re(ince), fa# si re(ince), fa sib re(ince), fa# si re#(ince), fa# la re, fa la re(ince), fa lab re(ince)".split(", ");
+    akorlar[4] = "sol si re(ince), sol sib re(ince), sol si re#(ince), sol# si re(ince), sol# si re#(ince), sol sib mib(ince), sol sib reb(ince), sol do(ince) mi(ince), sol do(ince) mib(ince), sol# do#(ince) mi(ince), sol si mi(ince), sol# si mi(ince)".split(", ");
+    akorlar[5] = "la do(ince) mi(ince), la do(ince) mi(ince), la do#(ince) mi(ince), lab do(ince) mib(ince), lab do(ince) mi(ince), la do(ince) fa(ince), lab do(ince) fa(ince), la do#(ince) fa#(ince), la re(ince) fa(ince), la re(ince) fa#(ince), lab re(ince) fa(ince)".split(", ");
+    akorlar[6] = "la(kalın) do mi, la(kalın) do mi, la(kalın) do# mi, lab(kalın) do mib, lab(kalın) do mi, la(kalın) do fa, lab(kalın) do fa, la(kalın) do# fa#, la(kalın) re fa, la(kalın) re fa#, lab(kalın) re fa".split(", ");
+    akorlar[7] = "si(kalın) re fa, si(kalın) re fa#, sib(kalın) re fa, sib(kalın) re fa#, sib(kalın) reb sol, sib(kalın) re sol, si(kalın) re sol, si(kalın) re sol#, sib(kalın) reb sol, si(kalın) mi sol, si(kalın) mi sol#, sib(kalın) mib sol, sib(kalın) mi sol, si(kalın) re# fa#".split(", ");
+    GenerateAkor(akorLength);
+
+    function GenerateAkor(akorLength){
+        SetVariables(akorLength);
+    
+        for (let i = 0; i < akorLength; i++) {
+            let rndIndex;
+            let pass1;
+            do {
+                pass1 = false;
+                rndIndex = Math.floor(Math.random() * akorlar.length);
+                if(akorIndexs[rndIndex] === 0){
+                    pass1 = true;
+                }
+            } while (pass1);
+    
+            let rndAkor;
+            let pass2;
+            do {
+                pass2 = false;
+                rndAkor = Math.floor(Math.random() * akorlar[rndIndex].length);
+                for (let j = 0; j < selectedAkorlar.length; j++) {
+                    if(selectedAkorlar[j] === akorlar[rndIndex][rndAkor]){
+                        pass2 = true;
+                        break;
+                    }
+                }
+                if(i > 0){
+                    const filter = [0, 2];
+                    const pastAkor = selectedAkorlar[i - 1].split(" ");
+                    const currentAkor = akorlar[rndIndex][rndAkor].split(" ");
+    
+                    for (let j = 0; j < filter.length; j++) {
+                        for (let k = 0; k < filter.length; k++) {
+                            if(pastAkor[filter[j]] == currentAkor[filter[k]]){
+                                pass2 = true;
+                            }
+                        }
+                        
+                    }
+                }
+            } while (pass2);
+    
+            selectedAkorlar[i] = akorlar[rndIndex][rndAkor];
+    
+            console.log((i + 1) + ". " + selectedAkorlar[i]);
+        }
+        List(2, difficulty, akorLength, selectedAkorlar);
+        TekSesButtonManager(2, selectedAkorlar);
+    
+    }
+    function SetVariables(akorLength)
+    {
+        //console.clear();
+        
+        selectedAkorlar = new Array(akorLength);
+        akorIndexs = new Array(akorlar.length);
+        fazlalik = akorLength % akorlar.length;
+        for (let i = 0; i < akorIndexs.length; i++) {
+            akorIndexs[i] = Math.floor(akorLength / akorlar.length);
+        }
+        do 
+        {
+            let rndIndex = Math.floor(Math.random() * akorlar.length);
+            if(akorIndexs[rndIndex] === Math.floor(akorLength / akorlar.length)){
+                akorIndexs[rndIndex]++;
+                fazlalik--;
+            }
+        } while (fazlalik != 0);        
+    }    
+}
+
 function generateNotesByValue(value) {
-    localStorage.setItem("ciftSesLengthValue", value);
-    console.log(localStorage.getItem("ciftSesLengthValue"));
+    localStorage.setItem("lengthValue", value);
 }
 // Çift ses bitiş
 
@@ -454,7 +546,7 @@ function List(type, difficulty, itemLength, generatedItem) {
     const rowDiv = document.createElement("div");
     rowDiv.classList.add("row");
     rowDiv.classList.add("justify-content-md-center");
-
+    
     switch (type) {
         case 0:
             // 3 Sütunlü bir div oluşturuluyor
@@ -464,8 +556,12 @@ function List(type, difficulty, itemLength, generatedItem) {
             }
             break;
         case 1:
-            const noteList = CreateNewUl(1, itemLength, type, generatedItem);
-            rowDiv.appendChild(noteList);
+            const noteList1 = CreateNewUl(1, itemLength, type, generatedItem);
+            rowDiv.appendChild(noteList1);
+            break;
+        case 2:
+            const noteList2 = CreateNewUl(1, itemLength, type, generatedItem);
+            rowDiv.appendChild(noteList2);
             break;
 
         default:
@@ -480,7 +576,7 @@ function List(type, difficulty, itemLength, generatedItem) {
     rowContainer.appendChild(scoreH1Element);
 
     const imageHTMLClassHolder = ["bi-play-circle", "bi-pause-circle", "bi-eye", "bi-gear-fill", "bi-arrow-clockwise", "bi-arrow-right-square"];
-    const butonNames = ["Oynat", "Durdur", "Göster", ["Zorluk Değiştir", "Uzunluk Değiştir"], "Yeniden Oluştur", "Yanıtla"];
+    const butonNames = ["Oynat", "Durdur", "Göster", ["Zorluk Değiştir", "Uzunluk Değiştir", "Uzunluk Değiştir"], "Yeniden Oluştur", "Yanıtla"];
     const butonIDs = ["playButton", "stopButton", "showAndHideButton", "changeDiffButton", "createAgainButton", "answerButton"];
     const colBreakPoint = ["12", "6", "4"];
     let imageCounter = 0;
@@ -559,49 +655,62 @@ function CreateNewUl(start, end, type, generatedItem) {
     
         const listItem2Dropdown = document.createElement("div");
         listItem2Dropdown.classList.add("dropdown");
-    
-        const listItem2DropdownButton = document.createElement("button");
-        listItem2DropdownButton.classList.add("btn", "btn-secondary", "dropdown-toggle", "btn-sm", "rounded-pill");
-        listItem2DropdownButton.setAttribute("type", "button");
-        listItem2DropdownButton.setAttribute("title", "Nota-Seçimi");
-        listItem2DropdownButton.setAttribute("data-bs-toggle", "dropdown");
-        listItem2DropdownButton.setAttribute("aria-expanded", "false");
-        listItem2DropdownButton.setAttribute("style", "background-color: #3D3B40;");
-    
-        const listItem2DropdownButtonIcon = document.createElement("i");
-        listItem2DropdownButtonIcon.classList.add("bi", "bi-music-note-list");
-    
-        const listItem2DropdownMenu = document.createElement("ul");
-        listItem2DropdownMenu.classList.add("dropdown-menu", "dropdown-menu-dark");
-        listItem2DropdownMenu.setAttribute("style", "width: 200px;");
-    
-        listItem2DropdownButton.appendChild(listItem2DropdownButtonIcon);
-        listItem2Dropdown.appendChild(listItem2DropdownButton);
-    
-        for (let j = 0; j < notalar.length; j++) {
-            const dropdownMenuItem = document.createElement("li");
-            dropdownMenuItem.classList.add("form-check", "mx-2");
-    
-            const itemInput = document.createElement("input");
-            itemInput.classList.add("form-check-input", "dropdownMenu-item");
-            itemInput.setAttribute("type", "radio");
-            itemInput.setAttribute("placeholder", "none");
-            itemInput.setAttribute("name", ("radioItem" + (i - 1)));
-            itemInput.setAttribute("id", "radioItem" + (i - 1) + "-" + j);
-            itemInput.setAttribute("value", notalar[j]);
-    
-            const itemLabel = document.createElement("label");
-            itemLabel.classList.add("form-check-label");
-            itemLabel.setAttribute("for", ("radioItem" + (i - 1)));
-            itemLabel.innerText = notalar[j];
-    
-            dropdownMenuItem.appendChild(itemInput);
-            dropdownMenuItem.appendChild(itemLabel);
-            listItem2DropdownMenu.appendChild(dropdownMenuItem);
+        
+        let noteListLength;
+        switch (type) {
+            case 2:
+                noteListLength = 2;
+                break;        
+            default:
+                noteListLength = 1;
+                break;
         }
-    
-        listItem2Dropdown.appendChild(listItem2DropdownMenu);
-        listItem2.appendChild(listItem2Dropdown);
+        for (let k = 0; k < noteListLength; k++) {
+            const listItem2DropdownButton = document.createElement("button");
+            listItem2DropdownButton.classList.add("btn", "btn-secondary", "dropdown-toggle", "btn-sm", "rounded-pill", "me-1");
+            listItem2DropdownButton.setAttribute("type", "button");
+            listItem2DropdownButton.setAttribute("title", "Nota-Seçimi");
+            listItem2DropdownButton.setAttribute("data-bs-toggle", "dropdown");
+            listItem2DropdownButton.setAttribute("aria-expanded", "false");
+            listItem2DropdownButton.setAttribute("style", "background-color: #3D3B40;");
+        
+            const listItem2DropdownButtonIcon = document.createElement("i");
+            listItem2DropdownButtonIcon.classList.add("bi", "bi-music-note-list");
+        
+            const listItem2DropdownMenu = document.createElement("ul");
+            listItem2DropdownMenu.classList.add("dropdown-menu", "dropdown-menu-dark");
+            listItem2DropdownMenu.setAttribute("style", "width: 200px;");
+        
+            listItem2DropdownButton.appendChild(listItem2DropdownButtonIcon);
+            listItem2Dropdown.appendChild(listItem2DropdownButton);
+        
+            for (let j = 0; j < notalar.length; j++) {
+                const dropdownMenuItem = document.createElement("li");
+                dropdownMenuItem.classList.add("form-check", "mx-2");
+        
+                const itemInput = document.createElement("input");
+                itemInput.classList.add("form-check-input", ("dropdownMenu-item" + k));
+                itemInput.setAttribute("type", "radio");
+                itemInput.setAttribute("placeholder", "none");
+                itemInput.setAttribute("name", ("radioItem" + (k + "-" + (i - 1))));
+                itemInput.setAttribute("id", "radioItem" + k + "-" + (i - 1) + "-" + j);
+                itemInput.setAttribute("value", notalar[j]);
+        
+                const itemLabel = document.createElement("label");
+                itemLabel.classList.add("form-check-label");
+                itemLabel.setAttribute("for", ("radioItem" + (k + "-" + (i - 1))));
+                itemLabel.innerText = notalar[j];
+        
+                dropdownMenuItem.appendChild(itemInput);
+                dropdownMenuItem.appendChild(itemLabel);
+                listItem2DropdownMenu.appendChild(dropdownMenuItem);
+            }
+        
+            listItem2Dropdown.appendChild(listItem2DropdownMenu);
+            listItem2.appendChild(listItem2Dropdown);
+            
+        }
+
     
         const listItem3 = document.createElement("li");
         listItem3.classList.add("list-inline-item");
@@ -609,7 +718,7 @@ function CreateNewUl(start, end, type, generatedItem) {
         const listItem3Paragraph = document.createElement("p");
         listItem3Paragraph.classList.add("noteHolder");
 
-        const innerTextValues = ["???", `${generatedItem[i - 1].split(" ")[0]}` + " ??? - ?????"];
+        const innerTextValues = ["???", `${generatedItem[i - 1].split(" ")[0]}` + " ??? - ?????", `${generatedItem[i - 1].split(" ")[0]}` + " ??? ???"];
         listItem3Paragraph.innerText = innerTextValues[type];
 
         listItem3.appendChild(listItem3Paragraph);

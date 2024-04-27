@@ -23,13 +23,13 @@
                     <a class="nav-link" href="index.html"> Anasayfa </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="tekSes.html"> Tek Ses </a>
+                    <a class="nav-link"  href="tekSes.html"> Tek Ses </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="ciftSes.html"> Çift Ses </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="akorlar.html"> Akorlar </a>
+                  <a class="nav-link active" aria-current="page" href="akorlar.html"> Akorlar </a>
               </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"> Melodiler </a>
@@ -45,12 +45,21 @@
 
     <div class="text-center" id="content-container">
       <div class="container p-3">
-        <h1>Tek Ses</h1>
-        <h2>Zorluk</h2>
+        <h1>Akorlar</h1>
+        <h3>Uzunluk Seçimi</h3>
       </div>
-      <div>
-          <button class="btn btn-primary" onclick="EasyTekSesGenerator()">Başlangıç</button>
-          <button class="btn btn-primary" onclick="NormalTekSesGenerator()">Normal</button>
+      <div class="btn-group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+        <label class="btn btn-outline-secondary px-3 " for="btnradio1" onclick="generateNotesByValue(5)">5</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
+        <label class="btn btn-outline-secondary px-3" for="btnradio2" onclick="generateNotesByValue(10)">10</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+        <label class="btn btn-outline-secondary px-3" for="btnradio3" onclick="generateNotesByValue(15)">15</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+        <label class="btn btn-outline-secondary px-3" for="btnradio4" onclick="generateNotesByValue(20)">20</label>
+      </div>
+      <div class="container p-3">
+        <button type="button" class="btn btn-primary" onclick="CreateAkor(localStorage.getItem('lengthValue'))">Oluştur</button>
       </div>
     </div>
     <h1 id="score"></h1>
@@ -78,9 +87,9 @@
 
             footerElement.appendChild(generatorSc);
             footerElement.appendChild(managerSc);
-
         };
     </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

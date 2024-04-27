@@ -12,7 +12,6 @@ function TekSesButtonManager(type, generatedItems){
 
     // Elements 
     const allSoundBtns = document.querySelectorAll(".sound-btn");
-    const allDropdownItems = document.querySelectorAll(".dropdownMenu-item");
     const audioHolder = document.getElementById("audioHolder");
     const noteHolders = document.getElementsByClassName("noteHolder");
     const allSelectNotesBtns = document.getElementsByClassName("dropdown-toggle");
@@ -28,19 +27,30 @@ function TekSesButtonManager(type, generatedItems){
     let currentNoteIndex = 0;
     let value = null;
     let turn = 1;
+    let guessCount;
+    let allSoundBtnsActive = true;
+
+    switch (type) {
+        case 2:
+            guessCount = 2;
+            break;
+        default:
+            guessCount = 1;
+            break;
+    }
 
     // Button Click functions
     playButton.addEventListener("click", function() {
         if(buttonsActive){
             currentNoteIndex = 0
             playNextNote();
-            ChangeButtonState(true, 'default', [playButton], false);
+            ChangeButtonState(true, 'default', [playButton, showAndHideButton], false, true);
         }
     });
     stopButton.addEventListener("click", function() {
         audioHolder.innerHTML = '';
         allSoundBtns[currentNoteIndex].setAttribute("style", "background-color: #3D3B40;");
-        ChangeButtonState(false, 'pointer', [playButton]);
+        ChangeButtonState(false, 'pointer', [playButton, showAndHideButton], false, false);
     });
     showAndHideButton.addEventListener("click", function() {
         showAndHideNotes();
@@ -54,8 +64,6 @@ function TekSesButtonManager(type, generatedItems){
 
     // Functions For Buttons
     function showAndHideNotes(){
-        console.log(generatedItems[0]);
-
         let buttonTexts = [" Gizle"," Göster"];
         let buttonImage = ["bi-eye-slash", "bi-eye"];
 
@@ -63,29 +71,36 @@ function TekSesButtonManager(type, generatedItems){
             buttonTexts = [" Göster"," Gizle"]
             buttonImage = ["bi-eye", "bi-eye-slash"];
             for (let index = 0; index < generatedItems.length; index++) {
-                if(type === 0)
-                    noteHolders[index].textContent = generatedItems[index];
-                else if(type === 1)
-                    noteHolders[index].textContent = generatedItems[index] + " - " + ciftSesAraligi[index];
+                switch (type) {
+                    case 1:
+                        noteHolders[index].textContent = generatedItems[index] + " - " + ciftSesAraligi[index];
+                        break;
+                    default:
+                        noteHolders[index].textContent = generatedItems[index];
+                        break;
+                }
             }
-            ChangeButtonState(true, 'default', [answerButton], true);
+            ChangeButtonState(true, 'default', [answerButton], true, true);
         }
         else{
             for (let index = 0; index < generatedItems.length; index++) {
-                const radioItem = document.querySelector(`input[name="radioItem${index}"]:checked`);
-                const noteHolderTextContent = ["???", `${generatedItems[index].split(" ")[0]}` + " ??? - ?????"];
-
-                let textValue;
-                if(radioItem != null){
-                    const radioItemValue = [radioItem.value, `${generatedItems[index].split(" ")[0]}` + " " +  radioItem.value + " - ?????"];
-                    textValue = radioItemValue[type];     
+                let radioItem = new Array(guessCount);
+                for (let index2 = 0; index2 < guessCount; index2++) {
+                    radioItem[index2] = document.querySelector(`input[name="radioItem${index2}-${index}"]:checked`);
+                    const noteHolderTextContent = ["???", `${generatedItems[index].split(" ")[0]}` + " ??? - ?????", noteHolders[index].textContent.replace(noteHolders[index].textContent.split(" ")[index2 + 1], "???")];
+    
+                    let textValue;
+                    if(radioItem[index2] != null){
+                        const radioItemValue = [radioItem[index2].value, `${generatedItems[index].split(" ")[0]}` + " " +  radioItem[index2].value + " - ?????", noteHolders[index].textContent.replace(noteHolders[index].textContent.split(" ")[index2 + 1], radioItem[index2].value)];
+                        textValue = radioItemValue[type];     
+                    }
+                    else{
+                        textValue = noteHolderTextContent[type];
+                    }                    
+                    noteHolders[index].textContent = textValue;
                 }
-                else{
-                    textValue = noteHolderTextContent[type];
-                }
-                noteHolders[index].textContent = textValue;
             }
-            ChangeButtonState(false, 'pointer', [answerButton], true);
+            ChangeButtonState(false, 'pointer', [answerButton], true, false);
         }
         showAndHideButton.childNodes.item(0).classList.replace(buttonImage[0], buttonImage[1]);
         showAndHideButton.innerHTML = showAndHideButton.innerHTML.replace(buttonTexts[0], buttonTexts[1]);
@@ -108,13 +123,11 @@ function TekSesButtonManager(type, generatedItems){
                 noteHolders[i].classList.remove("false");
             }
             const arrayHolderValue = [generatedItems[i], generatedItems[i].split(" ")];
-            const secilenArrayHolderValue = [noteHolders[i].textContent, noteHolders[i].textContent.split(" ")];
+            const secilenArrayHolderValue = [noteHolders[i].textContent, noteHolders[i].textContent.split(" -")[0], noteHolders[i].textContent.split(" ")];
 
-            console.log(generatedItems[i]);
 
-            sesArrayHolder[i] = bemolToDiyez(arrayHolderValue[type]);
+            sesArrayHolder[i] = bemolToDiyez(arrayHolderValue[guessCount - 1]);
             secilenArrayHolder[i] = bemolToDiyez(secilenArrayHolderValue[type]);
-
         }
 
         let dogru = 0;
@@ -124,7 +137,9 @@ function TekSesButtonManager(type, generatedItems){
             const holder1Values = [secilenArrayHolder[i], secilenArrayHolder[i][type]];
             const holder2Values = [sesArrayHolder[i], sesArrayHolder[i][type]];
 
-            if(holder1Values[type] === holder2Values[type]){
+            noteHolders[i].parentElement.parentElement.childNodes[1].innerHTML = "";
+
+            if(holder1Values[guessCount - 1] === holder2Values[guessCount - 1]){
                 for (const modifier of succesClass) {
                     noteHolders[i].classList.add(modifier);   
                 }
@@ -132,8 +147,22 @@ function TekSesButtonManager(type, generatedItems){
             }
             else{
                 for (const modifier of failClass) {
-                    noteHolders[i].classList.add(modifier);   
+                    noteHolders[i].classList.add(modifier); 
                 }
+                //console.log(noteHolders[i]);
+                const listItem4 = document.createElement("li");
+                listItem4.classList.add("list-inline-item");
+                const listItem4Paragraph = document.createElement("p");
+                listItem4Paragraph.textContent = generatedItems[i];
+                for (const modifier of succesClass) {
+                    listItem4Paragraph.classList.add(modifier);
+                }
+                listItem4Paragraph.classList.replace("bg-success", "bg-info");
+                listItem4Paragraph.classList.replace("text-white", "text-black");
+                listItem4.appendChild(listItem4Paragraph);
+                const ulItem = document.querySelectorAll(".item");
+                ulItem[i].appendChild(listItem4);
+
                 yanlis++;
             }
         }
@@ -143,17 +172,21 @@ function TekSesButtonManager(type, generatedItems){
     // Notaların yanındaki dinleme butonuna click event listener ekliyor
     allSoundBtns.forEach(function (soundButton) {
         soundButton.addEventListener("click", function () {
-            if(buttonsActive){
+            if(buttonsActive || allSoundBtnsActive){
+                audioHolder.innerHTML = '';
                 value = soundButton.getAttribute("value");
-                const buttonTextValues = [generatedItems[value], generatedItems[value].split(" ")];
+                const buttonTextValues = [generatedItems[value], generatedItems[value].split(" "), generatedItems[value].split(" ")];
                 let buttonText = buttonTextValues[type];
 
-                ChangeButtonState(true, 'default', [playButton, stopButton], false);
+                allSoundBtns.forEach(element => {
+                    element.setAttribute("style", "background-color: #3D3B40;");
+                });
+
+                ChangeButtonState(true, 'default', [playButton, stopButton, showAndHideButton], false, false);
                 document.querySelectorAll(".sound-btn")[value].setAttribute("style", "background-color: #0d6efd");
                 buttonText = bemolToDiyez(buttonText);
-                // console.log(buttonText);
                 const soundPath = getSoundPath(buttonText);
-                // console.log(soundPath);
+                //console.log(soundPath);
                 if (soundPath) {
                     playSoundPath(soundPath, false, value);
                 } else {
@@ -173,7 +206,7 @@ function TekSesButtonManager(type, generatedItems){
 
         for (let index = 0; index < bemol.length; index++) {
             for (let j = 0; j < type + 1; j++) {
-                const btnTextValue = [buttonText, buttonText[j]];
+                const btnTextValue = [buttonText, buttonText, buttonText[j]];
 
                 if(btnTextValue[type].includes(bemol[index])){
                     for (const modifier of ses) {
@@ -182,10 +215,14 @@ function TekSesButtonManager(type, generatedItems){
                             break;
                         }
                     }
-                    if(type == 0)
-                        buttonText = btnTextValue[type].replace(btnTextValue[type], (diyez[index] + sesHolder));
-                    else
-                        buttonText[j] = btnTextValue[type].replace(btnTextValue[type], (diyez[index] + sesHolder));
+                    switch (type) {
+                        case 2:
+                            buttonText[j] = btnTextValue[type].replace(btnTextValue[type], (diyez[index] + sesHolder));        
+                            break; 
+                        default:
+                            buttonText = btnTextValue[type].replace(btnTextValue[type], (diyez[index] + sesHolder));
+                            break;
+                    }
                 }           
             }
         }
@@ -194,9 +231,8 @@ function TekSesButtonManager(type, generatedItems){
     // Ses yolunu döndürüyor
     function getSoundPath(notes){
         let returnValue = new Array(notes.length);
-
         for (let index = 0; index < type + 1; index++) {
-            const notesValue = [notes, notes[index]];
+            const notesValue = [notes, notes[index], notes[index]];
             if(notesValue[type].includes("#")){
                 notesValue[type] = notesValue[type].replace("#","_diyez");
             }
@@ -205,7 +241,6 @@ function TekSesButtonManager(type, generatedItems){
             else
                 returnValue[index] = `${audioPath}/${notesValue[type]}.mp3`;
         }
-
         return returnValue;   
     }
     // Ses yolunu audioHolder'a <audio> ekleyip sesi çalıyor. Ses bittiğinde audioHolder içi temizleniyor.
@@ -215,8 +250,9 @@ function TekSesButtonManager(type, generatedItems){
 
         audioHolder.innerHTML = '';
         let audioElement = new Array(type + 1);
+
         for (let i = 0; i < type + 1; i++) {
-            const soundPathValues = [soundPath, soundPath[i]];
+            const soundPathValues = [soundPath, soundPath[i], soundPath[i]];
             audioElement[i] = document.createElement("audio");
             audioElement[i].setAttribute("id", "audio" + (i + 1));
             let source = document.createElement("source");
@@ -226,14 +262,6 @@ function TekSesButtonManager(type, generatedItems){
             audioElement[i].load();
             audioElement[i].play();
         }
-        // let audioElement = document.createElement("audio");
-        // audioElement.setAttribute("id","audio1");
-        // let source = document.createElement("source");
-        // source.setAttribute("src", soundPath);
-        // audioElement.appendChild(source);
-        // audioHolder.appendChild(audioElement);
-        // audioElement.load();
-        // audioElement.play();
 
         audioElement[0].addEventListener("ended", function onEnded() {
             allSoundBtns[noteIndex].setAttribute("style", "background-color: #3D3B40;");
@@ -256,7 +284,7 @@ function TekSesButtonManager(type, generatedItems){
                 });
             }
             else{
-                ChangeButtonState(false, 'pointer', [playButton, stopButton], false);
+                ChangeButtonState(false, 'pointer', [playButton, stopButton, showAndHideButton], false, false);
             }
             audioElement[0].removeEventListener("ended", onEnded);
 
@@ -267,7 +295,7 @@ function TekSesButtonManager(type, generatedItems){
             if (currentNoteIndex < allSoundBtns.length) {
                 const buttonTextValues = [generatedItems[currentNoteIndex], generatedItems[currentNoteIndex].split(" ")];
 
-                var buttonText = buttonTextValues[type];
+                var buttonText = buttonTextValues[guessCount - 1];
     
                 buttonText = bemolToDiyez(buttonText);
     
@@ -289,21 +317,33 @@ function TekSesButtonManager(type, generatedItems){
             console.log("Tur sonu.");
             audio.pause();
             audio.currentTime = 0;
-            ChangeButtonState(false, 'pointer', [playButton]);;
+            ChangeButtonState(false, 'pointer', [playButton], false, false);;
         }
     }
     // Dropdown menüsünden bir seçim yapıldığında '???' ifadesi yerine seçilen nota gelecek.
-    allDropdownItems.forEach(function (item) {
-        item.addEventListener("click", function () {
-            let itemNumber = parseInt(item.id.split("-")[0].split("radioItem")[1]);
-            const noteHolderTextContent = [item.value, generatedItems[itemNumber].split(" ")[0] + " " + item.value + " - ?????"]
+    let allDropdownItems = new Array(guessCount);
+    for (let index = 0; index < allDropdownItems.length; index++) {
+        allDropdownItems[index] = document.querySelectorAll(`.dropdownMenu-item${index}`);
+    }
+    //console.log(allDropdownItems);
+    //const allDropdownItems = document.querySelectorAll(".dropdownMenu-item");
 
-            noteHolders[itemNumber].textContent = noteHolderTextContent[type];
+for (let index = 0; index < allDropdownItems.length; index++) {
+    allDropdownItems[index].forEach(function (item) {
+        item.addEventListener("click", function () {
+            // let itemNumber = parseInt(item.id.split("-")[0].split("radioItem")[1]);
+            let itemNumber = parseInt(item.id.split("radioItem")[1].split("-")[1]);
+
+            const noteHolderTextContent = [[item.value], [generatedItems[itemNumber].split(" ")[0] + " " + item.value + " - ?????"], [generatedItems[itemNumber].split(" ")[0] + " " + item.value + " " + noteHolders[itemNumber].textContent.split(" ")[2], generatedItems[itemNumber].split(" ")[0] + " " + noteHolders[itemNumber].textContent.split(" ")[1] + " " + item.value]];
+
+            noteHolders[itemNumber].textContent = noteHolderTextContent[type][index];
         });
     });
+    
+}
 
     // Butonların durumunu değiştiriyor
-    function ChangeButtonState(boolValue, cursorStyle, buttonElement, changeSelecting){
+    function ChangeButtonState(boolValue, cursorStyle, buttonElement, changeSelecting, changeSoundBtns){
         buttonElement.forEach(element => {
             if(element){
                 element.disabled = boolValue;
@@ -318,9 +358,12 @@ function TekSesButtonManager(type, generatedItems){
             }
         }
 
-        allSoundBtns.forEach(element => {
-            element.style.cursor = cursorStyle;
-        });
+        if(changeSoundBtns){
+            allSoundBtns.forEach(element => {
+                element.style.cursor = cursorStyle;
+            });
+        }
+        allSoundBtnsActive = !changeSoundBtns;
         buttonsActive = !boolValue;
     }
 }
