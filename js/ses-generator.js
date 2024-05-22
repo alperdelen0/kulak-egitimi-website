@@ -1,10 +1,13 @@
 localStorage.setItem("lengthValue", 10);
 let notalar = ["fa#(kalın)/solb(kalın)", "sol(kalın)", "sol#(kalın)/lab(kalın)", "la(kalın)", "la#(kalın)/sib(kalın)", "si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)", "fa(ince)", "fa#(ince)/solb(ince)", "sol(ince)"];
 let ciftSesAraliklari = "minör2, majör2, minör3, majör3, tam4, artmış4, tam5, minör6, majör6, minör7, majör7".split(", ");
+let notaArray = [["do", "do#", "do(ince)", "do#(ince)"], ["re", "reb", "re#", "re(ince)", "reb(ince)", "re#(ince)"], ["mi", "mib", "mi(ince)", "mib(ince)"], ["fa", "fa#", "fa(kalın)", "fa#(kalın)", "fa(ince)", "fa#(ince)"], ["sol", "solb", "sol#", "sol(kalın)", "solb(kalın)", "sol#(kalın)", "sol(ince)", "solb(ince)"], ["la", "lab", "la#", "la(kalın)", "lab(kalın)", "la#(kalın)"], ["si", "sib", "si(kalın)", "sib(kalın)"]];
 
 // Tek ses başlangıç
 function NormalTekSesGenerator(diff){
     notalar = ["si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
+    notaArray = [["do", "do#", "do(ince)", "do#(ince)"], ["re", "reb", "re#", "re(ince)", "reb(ince)", "re#(ince)"], ["mi", "mib", "mi(ince)", "mib(ince)"], ["fa", "fa#"], ["sol", "solb", "sol#"], ["la", "lab", "la#"], ["si", "sib", "si(kalın)"]];
+
     let difficulty = "NormalTekSesGenerator()";
     let noteLengths = 30;
 
@@ -114,6 +117,8 @@ function NormalTekSesGenerator(diff){
 function EasyTekSesGenerator(diff){
     console.log(diff);
     notalar = ["si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
+    notaArray = [["do", "do#", "do(ince)", "do#(ince)"], ["re", "reb", "re#", "re(ince)", "reb(ince)", "re#(ince)"], ["mi", "mib", "mi(ince)", "mib(ince)"], ["fa", "fa#"], ["sol", "solb", "sol#"], ["la", "lab", "la#"], ["si", "sib", "si(kalın)"]];
+
     let difficulty = `EasyTekSesGenerator('${diff}')`;
     let tekSesler = new Array;
     let noteLength = 30;
@@ -274,6 +279,8 @@ function CreateCiftSes(ciftSesLength, diff){
             ayniNotalar[1] = "sib(kalın), reb, mib, solb, lab, sib, reb(ince), mib(ince)".split(", ");
 
             notalar = ["la#(kalın)/sib(kalın)", "si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
+            notaArray = [["do", "do#", "do(ince)", "do#(ince)"], ["re", "reb", "re#", "re(ince)", "reb(ince)", "re#(ince)"], ["mi", "mib", "mi(ince)", "mib(ince)"], ["fa", "fa#"], ["sol", "solb", "sol#"], ["la", "lab", "la#", "la#(kalın)"], ["si", "sib", "si(kalın)", "sib(kalın)"]];
+            
             ciftSesAraliklari = "minör2, majör2, minör3, majör3, tam4, tam5".split(", ");
             break;
         case 'Normal':
@@ -290,6 +297,7 @@ function CreateCiftSes(ciftSesLength, diff){
             aralikIndexs = [0, 1, 2, 3, 4, 5, 6];
 
             notalar = ["la#(kalın)/sib(kalın)", "si(kalın)", "do", "do#/reb", "re", "re#/mib", "mi", "fa", "fa#/solb", "sol", "sol#/lab", "la", "la#/sib", "si", "do(ince)", "do#(ince)/reb(ince)", "re(ince)", "re#(ince)/mib(ince)", "mi(ince)"];
+            notaArray = [["do", "do#", "do(ince)", "do#(ince)"], ["re", "reb", "re#", "re(ince)", "reb(ince)", "re#(ince)"], ["mi", "mib", "mi(ince)", "mib(ince)"], ["fa", "fa#"], ["sol", "solb", "sol#"], ["la", "lab", "la#", "la#(kalın)"], ["si", "sib", "si(kalın)", "sib(kalın)"]];
             ciftSesAraliklari = "minör2, majör2, minör3, majör3, tam4, artmış4, tam5".split(", ");
             break;
         case 'Zor':
@@ -1003,13 +1011,13 @@ function CreateNewUl(start, end, type, generatedItem) {
         listItem2Dropdown.classList.add("dropdown");
         
         let noteListLength;
-        let noteListContent = [notalar];
+        let noteListContent = [notaArray];
         let ddBtnTitle = ["Nota-Seçimi"];
         let ddBtnIcon = ["bi-music-note-list", "bi-list"];
         switch (type) {
             case 1:
                 noteListLength = 2;
-                noteListContent = [notalar, ciftSesAraliklari];
+                noteListContent = [notaArray, ciftSesAraliklari];
                 ddBtnTitle = ["Nota-Seçimi", "Aralık-Seçimi"];
                 ddBtnIcon = ["bi-music-note-list", "bi-list"];
                 break;
@@ -1034,40 +1042,93 @@ function CreateNewUl(start, end, type, generatedItem) {
             listItem2DropdownButton.setAttribute("type", "button");
             listItem2DropdownButton.setAttribute("title", ddBtnTitle[k]);
             listItem2DropdownButton.setAttribute("data-bs-toggle", "dropdown");
+            listItem2DropdownButton.setAttribute("data-bs-auto-close", "outside");
             listItem2DropdownButton.setAttribute("aria-expanded", "false");
             listItem2DropdownButton.setAttribute("style", "background-color: #3D3B40;");
         
             const listItem2DropdownButtonIcon = document.createElement("i");
             listItem2DropdownButtonIcon.classList.add("bi", ddBtnIcon[k]);
-            
+            let minWidthValue;
+
             const listItem2DropdownMenu = document.createElement("ul");
-            listItem2DropdownMenu.classList.add("dropdown-menu", "dropdown-menu-dark");
-            listItem2DropdownMenu.setAttribute("style", "width: 200px;");
+            listItem2DropdownMenu.classList.add("dropdown-menu", "dropdown-menu-dark", "text-center");
         
             listItem2DropdownButton.appendChild(listItem2DropdownButtonIcon);
             listItem2Dropdown.appendChild(listItem2DropdownButton);
-        
-            for (let j = 0; j < noteListContent[k].length; j++) {
-                const dropdownMenuItem = document.createElement("li");
-                dropdownMenuItem.classList.add("form-check", "mx-2");
-        
-                const itemInput = document.createElement("input");
-                itemInput.classList.add("form-check-input", ("dropdownMenu-item" + k));
-                itemInput.setAttribute("type", "radio");
-                itemInput.setAttribute("placeholder", "none");
-                itemInput.setAttribute("name", ("radioItem" + (k + "-" + (i - 1))));
-                itemInput.setAttribute("id", "radioItem" + k + "-" + (i - 1) + "-" + j);
-                itemInput.setAttribute("value", noteListContent[k][j]);
-        
-                const itemLabel = document.createElement("label");
-                itemLabel.classList.add("form-check-label");
-                itemLabel.setAttribute("for", ("radioItem" + (k + "-" + (i - 1))));
-                itemLabel.innerText = noteListContent[k][j];
-        
-                dropdownMenuItem.appendChild(itemInput);
-                dropdownMenuItem.appendChild(itemLabel);
-                listItem2DropdownMenu.appendChild(dropdownMenuItem);
+
+            if(ddBtnTitle[k] === "Nota-Seçimi"){
+            listItem2DropdownMenu.setAttribute("style", "min-width: 65px;");
+
+
+                for (let j = 0; j < notaArray.length; j++) {
+                    const dropdownMenuItem = document.createElement("li");
+                    dropdownMenuItem.classList.add("btn-group", "dropend", "mx-2");
+                    dropdownMenuItem.setAttribute("role", "group");
+    
+                    const itemBtnElement = document.createElement("button");
+                    itemBtnElement.classList.add("dropdown-toggle", "dropdown-item");
+                    itemBtnElement.setAttribute("type", "button");
+                    itemBtnElement.setAttribute("data-bs-toggle", "dropdown");
+                    itemBtnElement.innerHTML = notaArray[j][0];
+    
+                    const itemUlElement = document.createElement("ul");
+                    itemUlElement.classList.add("dropdown-menu", "dropdown-menu-dark");
+    
+                    for (let l = 0; l < notaArray[j].length; l++) {
+                        const itemLiElement = document.createElement("li");
+                        itemLiElement.classList.add("form-check", "mx-2");
+    
+                        const liChildInputElement = document.createElement("input");
+                        liChildInputElement.classList.add("form-check-input", ("dropdownMenu-item" + k))
+                        liChildInputElement.setAttribute("type", "radio");
+                        liChildInputElement.setAttribute("placeholder", "none");
+                        liChildInputElement.setAttribute("name", ("radioItem" + (k + "-" + (i - 1))));
+                        liChildInputElement.setAttribute("id", ("radioItem" + k + "-" + (i - 1) + "-" + j));
+                        liChildInputElement.setAttribute("value", notaArray[j][l]);
+    
+                        const liChildLabelElement = document.createElement("label");
+                        liChildLabelElement.classList.add("form-check-label", "text-white");
+                        liChildLabelElement.setAttribute("for", ("radioItem" + (k + "-" + (i - 1))));
+                        liChildLabelElement.innerText = notaArray[j][l];
+    
+                        itemLiElement.appendChild(liChildInputElement);
+                        itemLiElement.appendChild(liChildLabelElement);
+                        itemUlElement.appendChild(itemLiElement);
+    
+                    }
+                    dropdownMenuItem.appendChild(itemBtnElement);
+                    dropdownMenuItem.appendChild(itemUlElement);
+
+                    listItem2DropdownMenu.appendChild(dropdownMenuItem);
+                }
             }
+            else{
+            listItem2DropdownMenu.setAttribute("style", "min-width: 100px;");
+
+                for (let j = 0; j < ciftSesAraliklari.length; j++) {
+                    const dropdownMenuItem = document.createElement("li");
+                    dropdownMenuItem.classList.add("form-check", "mx-2");
+
+                    const itemInput = document.createElement("input");
+                    itemInput.classList.add("form-check-input", ("dropdownMenu-item" + k));
+                    itemInput.setAttribute("type", "radio");
+                    itemInput.setAttribute("placeholder", "none");
+                    itemInput.setAttribute("name", ("radioItem" + (k + "-" + (i - 1))));
+                    itemInput.setAttribute("id", "radioItem" + k + "-" + (i - 1) + "-" + j);
+                    itemInput.setAttribute("value", ciftSesAraliklari[j]);
+            
+                    const itemLabel = document.createElement("label");
+                    itemLabel.classList.add("form-check-label");
+                    itemLabel.setAttribute("for", ("radioItem" + (k + "-" + (i - 1))));
+                    itemLabel.innerText = ciftSesAraliklari[j];
+            
+                    dropdownMenuItem.appendChild(itemInput);
+                    dropdownMenuItem.appendChild(itemLabel);
+                    listItem2DropdownMenu.appendChild(dropdownMenuItem);
+                }
+            }
+        
+
         
             listItem2Dropdown.appendChild(listItem2DropdownMenu);
             listItem2.appendChild(listItem2Dropdown);

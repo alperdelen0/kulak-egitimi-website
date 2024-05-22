@@ -90,11 +90,25 @@ function ButtonManager(type, generatedItems){
         }
         else{
             for (let index = 0; index < generatedItems.length; index++) {
+                if(type === 3)
+                    guessCount = generatedItems[index].split(" ").length - 1;
+
                 if(!(noteHolders[index].classList.contains("bg-success"))){
                     let radioItem = new Array(guessCount);
                     for (let index2 = 0; index2 < guessCount; index2++) {
-                        radioItem[index2] = document.querySelector(`input[name="radioItem${index2}-${index}"]:checked`);
+                        if(document.querySelector(`input[name="radioItem${index2}-${index}"]:checked`) != null){
+                            radioItem[index2] = document.querySelector(`input[name="radioItem${index2}-${index}"]:checked`).value;
+                        }
+                        else
+                        {
+                            radioItem[index2] = "???";
+                            if(type === 1 && index2 === 1){
+                                radioItem[index2] = "?????";
+                            }
+                        }
+                        console.log(noteHolders[index].textContent);
 
+                        /*
                         let hiddenItemText = "";
                         const hiddenItemCount = generatedItems[index].split(" ").length - 1;
 
@@ -114,14 +128,40 @@ function ButtonManager(type, generatedItems){
 
                         let textValue;
                         if(radioItem[index2] != null){
-                            const radioItemValue = [radioItem[index2].value, `${generatedItems[index].split(" ")[0]}` + " " +  radioItem[index2].value + " - ?????", noteHolders[index].textContent.replace(noteHolders[index].textContent.split(" ")[index2 + 1], radioItem[index2].value)];
+                            const radioItemValue = [radioItem[index2].value, `${generatedItems[index].split(" ")[0]}` + " " +  radioItem[index].value + " - ?????", noteHolders[index].textContent.replace(noteHolders[index].textContent.split(" ")[index2 + 1], radioItem[index2].value)];
                             textValue = radioItemValue[type];
+                            console.log("1-" + textValue + " / " + noteHolders[index].textContent);
                         }
                         else{
-                            textValue = innerTextValue;
+                            let index4Pass = false;
+                            for (let index4 = 0; index4 < radioItem.length; index4++) {
+                                if(radioItem[index4] != null){
+                                    index4Pass = true;
+                                    break;
+                                }
+                            }
+                            if(!index4Pass)
+                                textValue = innerTextValue;
+                            else
+                                textValue = noteHolders[index].textContent;
+                            console.log("2-" + textValue + " / " + noteHolders[index].textContent);
                         }                    
-                        noteHolders[index].textContent = textValue;
-                }
+                        noteHolders[index].textContent = textValue;*/
+                    }
+                    let textValues = [radioItem[0], `${generatedItems[index].split(" ")[0]}` + " " +  radioItem[0] + " - " + radioItem[1], `${generatedItems[index].split(" ")[0]}` + " " +  radioItem[0] + " " + radioItem[1]];
+                    textValues[0] = radioItem[0];
+                    textValues[1] = `${generatedItems[index].split(" ")[0]}` + " " +  radioItem[0] + " - " + radioItem[1];
+                    textValues[2] = `${generatedItems[index].split(" ")[0]}` + " " +  radioItem[0] + " " + radioItem[1];
+                    textValues[3] = `${generatedItems[index].split(" ")[0]}`;
+                    if(type === 3){
+                        for (let index2 = 0; index2 < guessCount; index2++) {
+                            textValues[3] += " " + radioItem[index2];
+                        }
+                    }
+
+                    noteHolders[index].textContent = textValues[type];
+
+                    console.log(radioItem);
                 }
             }
             ChangeButtonState(false, 'pointer', [answerButton], true, false);
@@ -152,13 +192,21 @@ function ButtonManager(type, generatedItems){
                 
                 // console.log(arrayHolderValue[type]);
                 // console.log(noteHolders[i].textContent.split(" - ")[0].split(" "));
+                // console.log("1- " + arrayHolderValue[type]);
+                // console.log("2- " + secilenArrayHolderValue[type]);
 
+                if(type == 0){
+                    sesArrayHolder[i] = bemolToDiyez(arrayHolderValue[type]);
+                    secilenArrayHolder[i] = bemolToDiyez(secilenArrayHolderValue[type]);
+                }
+                else
+                {
+                    sesArrayHolder[i] = (arrayHolderValue[type]);
+                    secilenArrayHolder[i] = (secilenArrayHolderValue[type]);
+                }
 
-                sesArrayHolder[i] = bemolToDiyez(arrayHolderValue[type]);
-                secilenArrayHolder[i] = bemolToDiyez(secilenArrayHolderValue[type]);
-
-                // console.log(sesArrayHolder[i]);
-                // console.log(secilenArrayHolder[i]);
+                // console.log("1- " + sesArrayHolder[i]);
+                // console.log("2- " + secilenArrayHolder[i]);
 
             }
 
@@ -259,7 +307,7 @@ function ButtonManager(type, generatedItems){
     // Ses aralıkları diyez şeklinde kayıt edildiği için bemolden diyeze çeviriyoruz
     // Buna gerek olmayabilir aslında neyse sonra bakarsın (25.04.24)
     function bemolToDiyez(buttonText){
-        console.log("in: " + buttonText);
+        //console.log("in: " + buttonText);
         const diyez = ["do#","re#","fa#","sol#","la#"];
         const bemol = ["reb","mib","solb","lab","sib"];
         const ses = ["(ince)", "(kalın)"];
@@ -288,7 +336,7 @@ function ButtonManager(type, generatedItems){
                 }           
             }
         }
-        console.log("out: " + buttonText);
+        //console.log("out: " + buttonText);
         return buttonText;
     }
     // Ses yolunu döndürüyor
